@@ -3,13 +3,18 @@ import { v4 as uuid } from "uuid";
 import "./App.css";
 import pocketnotes from "./images/pocketnotes-main.png";
 import dot from "./images/dot.png";
+import firstpage from "./images/firstpage.png";
+import arrow from "./images/arrow.png";
+
+import { useMediaQuery, useMediaQueries } from "@react-hook/media-query";
+
 import { IoSendSharp } from "react-icons/io5";
 
 function App() {
   const [selectedGroupIndex, _setSelectedGroupIndex] = useState(null);
 
   const [newGroupName, _setNewGroupName] = useState("");
-  const [newGroupColor, _setNewGroupColor] = useState("#B38BFA");
+  const [newGroupColor, _setNewGroupColor] = useState("");
 
   const [newNoteContent, _setNewNoteContent] = useState("");
 
@@ -92,11 +97,25 @@ function App() {
     setisNewGroupDialougeOpen(!isNewGroupDialougeOpen);
   };
 
+  const groupHeading = (a) => {
+    const word = a.split(" ");
+    const titleName = word.map((word) => word[0]);
+    return titleName;
+  };
+
+  const isSmallScreen = useMediaQuery("max-width:767px");
+
+  const handlekeydown = (event) => {
+    if (event.key === "Enter" && newNoteContent !== "") {
+      newNoteContent();
+    }
+  };
+
   return (
     <>
       <div className="main">
         <div className="notes-list">
-          <p id="pockere-notes-heading">Pocket Notes</p>
+          <p id="pocket-notes-heading">Pocket Notes</p>
           <div id="add-note">
             <div className="notes-added">
               {groups.map((group, index) => (
@@ -104,52 +123,95 @@ function App() {
                   key={group.id}
                   onClick={() => setSelectedGroupIndex(index)}
                 >
-                  {group.title}
+                  <div className="group-initial-title">
+                    <div
+                      className="title-circle"
+                      style={{
+                        backgroundColor: group.color,
+                      }}
+                    >
+                      {groupHeading(group.title)}
+                    </div>
+                    {group.title}
+                  </div>
                 </button>
               ))}
             </div>
-            <button onClick={toggleNote} id="add-button">
+
+            <button
+              onClick={toggleNote}
+              id="add-button"
+              style={{
+                backgroundColor: "#001F8B",
+              }}
+            >
               +
             </button>
+
             {isNewGroupDialougeOpen && (
               <div className="overlay">
                 <div className="create-new-group">
-                  <h2>Create New Group</h2>
-                  <label htmlFor="group-name">Group Name</label>
-                  <input
-                    id="group-name"
-                    type="text"
-                    value={newGroupName}
-                    onChange={setNewGroupName}
-                  />
-                  <label htmlFor="group-color">Group Color</label>
-                  <div name="group-color">
-                    <button onClick={() => setNewGroupColor("#B38BFA")}>
-                      purple
-                    </button>
-                    <button onClick={() => setNewGroupColor("#FF79F2")}>
-                      pink
-                    </button>
-                    <button onClick={() => setNewGroupColor("#43E6FC")}>
-                      green
-                    </button>
-                    <button onClick={() => setNewGroupColor("#F19576")}>
-                      orange
-                    </button>
-                    <button onClick={() => setNewGroupColor("#0047FF")}>
-                      blue
-                    </button>
-                    <button onClick={() => setNewGroupColor("#6691FF")}>
-                      violet
-                    </button>
+                  <h2 className="create-new-group-header">Create New Group</h2>
+                  <div className="group-input-name">
+                    <label htmlFor="group-name">Group Name</label>
+                    <input
+                      id="group-name"
+                      type="text"
+                      value={newGroupName}
+                      onChange={setNewGroupName}
+                    />
                   </div>
+
+                  <div className="group-color-button">
+                    <label htmlFor="group-color">Group Color</label>
+                    <div name="group-color" className="group-color">
+                      <button
+                        className="choose-color"
+                        onClick={() => setNewGroupColor("#B38BFA")}
+                        style={{ backgroundColor: "#B38BFA" }}
+                      ></button>
+                      <button
+                        className="choose-color"
+                        onClick={() => setNewGroupColor("#FF79F2")}
+                        style={{ backgroundColor: "#FF79F2" }}
+                      ></button>
+                      <button
+                        className="choose-color"
+                        onClick={() => setNewGroupColor("#43E6FC")}
+                        style={{ backgroundColor: "#43E6FC" }}
+                      ></button>
+                      <button
+                        className="choose-color"
+                        onClick={() => setNewGroupColor("#F19576")}
+                        style={{ backgroundColor: "#F19576" }}
+                      ></button>
+                      <button
+                        className="choose-color"
+                        onClick={() => setNewGroupColor("#0047FF")}
+                        style={{ backgroundColor: "#0047FF" }}
+                      ></button>
+                      <button
+                        className="choose-color"
+                        onClick={() => setNewGroupColor("#6691FF")}
+                        style={{ backgroundColor: "#6691FF" }}
+                      ></button>
+                    </div>
+                  </div>
+
                   {/* <input
-                  name="group-name"
-                  type="text"
-                  value={newGroupColor}
-                  onChange={setNewGroupColor}
-                /> */}
-                  <button onClick={addNewGroup}>Create</button>
+                    name="group-name"
+                    type="text"
+                    value={newGroupColor}
+                    onChange={setNewGroupColor}
+                  /> */}
+
+                  <button
+                    onClick={addNewGroup}
+                    disabled={!newGroupName || newGroupColor === ""}
+                    className="create-button"
+                  >
+                    Create
+                  </button>
                 </div>
               </div>
             )}
@@ -157,77 +219,111 @@ function App() {
         </div>
         {selectedGroupIndex == null && (
           <div className="pocket-notes">
-            <img src={pocketnotes} alt="pocketnotes-main-image" />
-            <h1>Pocket Notes</h1>
-            <p>
-              Send and receive messages without keeping your phone online. Use
-              Pocket Notes on up to 4 linked devices and 1 mobile phone
+            <div className="pocketnotes-img-para">
+              <img
+                src={pocketnotes}
+                alt="pocketnotes-main-image"
+                className="pocket-notes-img"
+              />
+              <h1 className="pocket-notes-header">Pocket Notes</h1>
+              <p className="pocket-notes-para">
+                Send and receive messages without keeping your phone online. Use
+                Pocket Notes on up to 4 linked devices and 1 mobile phone
+              </p>
+            </div>
+            <p className="pocket-notes-encryption">
+              {" "}
+              <img src={firstpage} alt="firstPage" />
+              {"  "}end-to-end encrypted
             </p>
-            <p>end-to-end encrypted</p>
           </div>
         )}
+
         {selectedGroupIndex !== null && (
           <div className="note-card-details">
-            <div
-              id="note-title"
-              style={{ backgroundColor: groups[selectedGroupIndex].color }}
-            >
-              {/* <p>{groups[selectedGroupIndex].title[i] !=' ' ? <h2>{groups[selectedGroupIndex].title[0]}</h2> : <h2>groups[selectedGroupIndex].title[0]</h2> } </p> */}
-              <p style={{ color: "white" }}>
-                {" "}
-                {groups[selectedGroupIndex].title[0]}
-              </p>
+            <div id="note-title" style={{ backgroundColor: "#001F8B" }}>
+              <button
+                className="title-button"
+                onClick={() => setSelectedGroupIndex(null)}
+              >
+                <img
+                  src={arrow}
+                  alt="arrow
+                "
+                />
+              </button>
+              <div
+                className="group-color-title"
+                style={{
+                  backgroundColor: groups[selectedGroupIndex].color,
+                }}
+              >
+                <div
+                  className="note-color-title"
+                  style={{
+                    backgroundColor: groups[selectedGroupIndex].color,
+                  }}
+                >
+                  {" "}
+                  {groupHeading(groups[selectedGroupIndex].title).join("")}
+                </div>
+              </div>
               <p id="title">{groups[selectedGroupIndex].title}</p>
             </div>
-            {/* <p>{groups[selectedGroupIndex].color}</p> */}
+
             <ol className="notes-group">
-              {groups[selectedGroupIndex].notes.map((note) => (
-                <li className="add-new-note" key={note.id}>
-                  <div className="note-content">
-                    <div>
-                      <span>{note.content}</span>
+              {groups[selectedGroupIndex].notes
+                .slice()
+                .reverse()
+                .map((note) => (
+                  <li className="add-new-note" key={note.id}>
+                    <div className="note-content">
+                      <div>
+                        <span>{note.content}</span>
+                      </div>
+                      <div>
+                        <span>{note.createdAt.toDateString()}</span>
+                        <span>
+                          {" "}
+                          <img
+                            className="date-time"
+                            src={dot}
+                            alt="dot.png"
+                          />{" "}
+                        </span>
+                        <span>
+                          {note.createdAt.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <span>{note.createdAt.toDateString()}</span>
-                      <span>
-                        {" "}
-                        <img
-                          className="date-time"
-                          src={dot}
-                          alt="dot.png"
-                        />{" "}
-                      </span>
-                      <span>
-                        {note.createdAt.toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </span>
-                    </div>
-                  </div>
-                </li>
-              ))}
+                  </li>
+                ))}
             </ol>
 
             <div className="note-card-inputbox"></div>
-            <div
-              className="note-card"
-              style={{ backgroundColor: groups[selectedGroupIndex].color }}
-            >
-              <div className="input-note-button">
-                <input
-                  type="text"
-                  id="new-note"
-                  value={newNoteContent}
-                  onChange={setnewNote}
-                />
-                <button
-                  onClick={addNewNote}
-                  disabled={!newNoteContent}
-                  style={{ color: groups[selectedGroupIndex].color }}
-                >
-                  <IoSendSharp />
-                </button>
+            <div className="note-card" style={{ backgroundColor: "#001F8B" }}>
+              <div className="note-card-button">
+                <div className="input-note-and-button">
+                  <input
+                    type="text"
+                    id="new-note"
+                    placeholder="Here’s the sample text for sample work"
+                    value={newNoteContent}
+                    onChange={setnewNote}
+                    onKeyDown={handlekeydown}
+                  />
+                  <button
+                    id="input-button"
+                    onClick={addNewNote}
+                    disabled={!newNoteContent}
+                    style={{ color: "#001F8B" }}
+                  >
+                    <IoSendSharp />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
