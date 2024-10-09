@@ -17,6 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 30%;
+  align-items: left;
 }
 
 #add-note {
@@ -46,7 +47,7 @@ body {
   margin-left: 0;
   margin-right: 0;
   position: fixed;
-  opacity: 0.9;
+  opacity: 1;
   z-index: 999;
 }
 
@@ -69,10 +70,13 @@ body {
 }
 
 #note-title {
-  margin-left: auto;
   color: white;
   display: flex;
+  align-items: center;
   width: 100%;
+  padding: 0;
+  margin: 0;
+  height: 5rem;
 }
 
 .pocket-notes {
@@ -103,8 +107,11 @@ body {
 
 .pocket-notes-para {
   color: #292929;
-  margin-left: 20rem;
-  margin-right: 15rem;
+  align-items: center;
+  width: 40rem;
+  word-wrap: normal;
+  /* margin-left: 20rem; */
+  /* margin-right: 15rem; */
   font-weight: 500;
 }
 
@@ -133,7 +140,7 @@ body {
   height: 3rem;
   width: 3rem;
   bottom: 2rem;
-  left: 20rem;
+  left: 15rem;
 }
 
 .button-prop {
@@ -181,17 +188,29 @@ body {
   margin-left: 1rem;
 }
 
+.createAt-updatedAt {
+  display: flex;
+  justify-content: end;
+}
+
 .input-note-and-button {
   background-color: white;
   display: flex;
   justify-content: space-between;
   height: 8rem;
   margin: 0;
+  width: 100%;
+}
+
+.group-color-button,
+.group-input-name {
+  font-size: 20px;
 }
 
 .note-card-button {
   padding: 0;
   width: 67%;
+
   margin-left: 1rem;
   margin-right: 1rem;
 }
@@ -200,6 +219,7 @@ body {
   width: 100%;
   border: none;
   margin-left: 2rem;
+  margin-bottom: 2rem;
 }
 
 .input-button {
@@ -216,6 +236,9 @@ body {
 
 .date-time {
   width: 5px;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  font-size: 14px;
 }
 
 .group-title-name {
@@ -231,6 +254,7 @@ body {
 .group-initial-title {
   display: flex;
   background-color: white;
+  align-items: center;
 }
 
 .group-input-name {
@@ -258,14 +282,24 @@ body {
 .group-color {
   width: 65%;
   display: flex;
-  justify-content: space-around;
-  margin-left: 0;
+  /* justify-content: space-around; */
 }
 
 .choose-color {
   height: 2.5rem;
   width: auto;
   border-radius: 100%;
+  margin-right: 1rem;
+}
+
+button {
+  font-size: auto;
+}
+
+::placeholder {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .group-color-title {
@@ -273,8 +307,7 @@ body {
   border-radius: 100%;
   width: 3rem;
   height: 3rem;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+
   margin-right: 1rem;
   margin-left: 1rem;
   display: flex;
@@ -291,7 +324,7 @@ body {
 
 #title {
   color: white;
-  font-size: 25px;
+  font-weight: 500;
 }
 
 .note-color-title {
@@ -301,12 +334,12 @@ body {
 }
 
 .title-circle {
-  border: 2px solid black;
   border-radius: 100%;
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: 3rem;
   color: white;
   margin-right: 0.5rem;
+  font-size: 2rem;
 }
 
 .title-button {
@@ -327,13 +360,21 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    align-items: center;
+    align-items: left;
   }
-
   .create-new-group {
     margin-top: 10rem;
     width: 70%;
     height: 30%;
+  }
+
+  .group-color-button,
+  .group-input-name {
+    font-size: 14px;
+  }
+
+  .note-card-details {
+    width: 100%;
   }
 
   .create-new-group-header {
@@ -367,5 +408,28 @@ body {
     margin-top: 0.5rem;
     width: 30%;
     height: 20%;
+  }
+
+  #new-note {
+    margin-left: 1rem;
+  }
+
+  .input-note-and-button {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    height: 8rem;
+    margin: 0;
+    width: 85vw;
+  }
+
+  ::placeholder {
+    font-size: 1rem;
+  }
+
+  .note-card-button {
+    padding: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
 }
